@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #main{
+            width:700px;
+            display: grid;
+            grid-template-columns: repeat(3,200px);
+            grid-gap:20px;
+            margin: auto;
+        }
+        #main>div{
+            height:350px;
+            border:1px solid black
+        }
+        img{
+            height: 70%;
+            width:100%;
+        }
+        p{
+            line-height: 10px;
+            text-align: center;
+        }
+        a{
+            text-decoration: none;
+            color:black;
+        }
+        a:hover{
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+ <p id="price"></p>
+ <p><a href="checkout.html">checkout</a></p>
+ <div id="main"></div>
+</body>
+</html>
+<script>
+    var arr=JSON.parse(localStorage.getItem("CartItems"));
+    var total
+    function display(arr){
+       total=0
+        document.querySelector("#main").textContent=null
+       arr.map(function(elem,index){
+       
+           var div=document.createElement("div");
+           var img=document.createElement("img");
+           img.src=elem.strCategoryThumb;
+           var name=document.createElement("p");
+           name.textContent=elem.strCategory;
+           var price=document.createElement("p");
+           price.textContent=elem.price;
+            total+=elem.price
+           var button=document.createElement("button");
+           button.textContent="remove"
+           button.addEventListener("click",function(){
+               arr.splice(index,1);
+               total-=elem.price
+               localStorage.setItem("CartItems",JSON.stringify(arr));
+               display(arr)
+               displayPrice(total)
+           })
+           div.append(img,name,price,button)
+           document.querySelector("#main").append(div)
+       })
+   }
+   display(arr)
+  function displayPrice(total){
+    document.querySelector("#price").textContent=`Total_Price:${total}`
+  }
+  displayPrice(total)
+</script>

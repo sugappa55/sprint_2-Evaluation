@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        <p>Name:<input type="text"required></p>
+        <p>Email:<input type="email"required></p>
+        <p>Address:<input type="text" required></p>
+        <p><input type="submit" id="submit"></p>
+    </form>
+    
+</body>
+</html>
+<script>
+document.querySelector("#submit").addEventListener("click",Ordered);
+function Ordered(event){
+event.preventDefault()
+  
+        alert("Order received,Please Wait");
+       
+        cooked()
+
+}
+function cooked(){
+    setTimeout(function(){
+        alert("Order being cooked,Please Wait")
+        ready()
+       
+    },3000)
+}
+function ready(){
+    setTimeout(function(){
+        alert("Your order is ready,Please Wait");
+        out()
+       
+    },5000)
+}
+function out(){
+    setTimeout(function(){
+        alert("Your order is out for delivery,Please Wait");
+        delivered()
+       
+       
+    },2000)
+}
+
+function delivered(){
+    setTimeout(function(){
+        alert("Your order delivered,thank you");
+       
+      
+    },2000)
+}
+</script>

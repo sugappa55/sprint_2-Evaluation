@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #body{
+            display:grid;
+            grid-template-columns: repeat(3,200px);
+            grid-template-rows: repeat(10,320px);
+            width:700px;
+            grid-gap:20px;
+            margin: auto;
+            margin-top: 50px;
+        }
+        div>img{
+            height: 70%;
+            width:100%
+        }
+        p{
+            text-align: center;
+            line-height: 10px;
+        }
+        #body>div{
+            border:1px solid black
+        }
+        body>p{
+            text-align: right;
+            margin-right: 50px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        body>p:hover{
+            text-decoration:underline;
+        }
+       
+    </style>
+</head>
+<body>
+<p id="count"></p>
+
+<div id="body"></div>
+    
+</body>
+</html>
+<script>
+   async function dishes(){
+        var res=await fetch("https:\\themealdb.com/api/json/v1/1/categories.php");
+       var data=await res.json()
+       console.log(data.categories)
+    display(data.categories)
+    
+   }
+   dishes()
+   function display(arr){
+       arr.map(function(elem){
+           var div=document.createElement("div");
+           var img=document.createElement("img");
+           img.src=elem.strCategoryThumb;
+           var name=document.createElement("p");
+           name.textContent=elem.strCategory;
+           var price=document.createElement("p");
+           elem.price=Math.round(Math.random()*1000)
+           price.textContent=elem.price;
+           var button=document.createElement("button");
+           button.textContent="add to cart"
+           button.addEventListener("click",function(){
+               addToCart(elem)
+           })
+           div.append(img,name,price,button)
+           document.querySelector("#body").append(div)
+       })
+   }
+   var cart=JSON.parse(localStorage.getItem("CartItems"))||[];
+   var length=JSON.parse(localStorage.getItem("CartItems")).length
+   Length(length)
+  function Length(arr){
+    document.querySelector("#count").textContent=`Cart(${length})`||"Cart(0)"
+  }
+  function addToCart(elem){
+      cart.push(elem);
+    
+length++
+Length(length)
+  localStorage.setItem("CartItems",JSON.stringify(cart))
+ // document.querySelector("#count").textContent=`Cart( ${count} )`
+  }
+  document.querySelector("#count").addEventListener("click",gotocart)
+  function gotocart(){
+      window.location.href="cart.html"
+  }
+</script>
